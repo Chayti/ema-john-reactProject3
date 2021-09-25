@@ -19,6 +19,11 @@ const Shop = () =>{
         setCart(newCart);
     }
 
+    const handleRemoveFromCart = key =>{
+        const finalCart = cart.filter(product=>product.key!=key)
+        setCart(finalCart);
+    }
+
     return (
         <div className="shop-container row">
             <div className="product-container col-10 border-end">
@@ -28,6 +33,7 @@ const Shop = () =>{
                         key={product.key} 
                         product={product}
                         handleAddToCart = {handleAddToCart}
+                        handleRemoveFromCart ={handleRemoveFromCart}
                     >
                     </Product>)
                 }

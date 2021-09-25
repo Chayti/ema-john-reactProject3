@@ -20,7 +20,7 @@ const Product = (props) =>{
                   
                   <button onClick={()=>props.handleAddToCart(props.product)} className="bg-warning px-5 border-warning d-flex align-items-center rounded"><small>Add into cart</small></button>
 
-                  <button className="bg-danger px-5 mt-2 text-light border-danger d-flex align-items-center rounded"><small>Remove this from cart</small></button>
+                  <button onClick={()=>props.handleRemoveFromCart(props.product.key)}className="bg-danger px-5 mt-2 text-light border-danger d-flex align-items-center rounded"><small>Remove this from cart</small></button>
                </div>
 
             </div>
