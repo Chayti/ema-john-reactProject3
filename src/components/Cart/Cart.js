@@ -3,8 +3,14 @@ import './Cart.css';
 
 const Cart = (props) =>{
     const {cart} = props;
-    let totalPrice =0;
+    console.log(cart);
+    
+    let totalPrice = 0;
+    let totalShipping = 0;
+    let grandTotal = 0;
+    
     cart.map(cartProduct => totalPrice=totalPrice+cartProduct.price)
+    cart.map(cartShipping => totalShipping=totalShipping+cartShipping.shipping)
     
     return(
         <div>
@@ -14,24 +20,39 @@ const Cart = (props) =>{
             
             <p className='mb-0'>
                 <small>
-                    Items: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ${totalPrice.toFixed(2)}
+                    Items: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+                    <span className="fw-bold">
+                        ${totalPrice.toFixed(2)}
+                    </span>
                 </small>
             </p>
             
-            <p className='mb-0'><small>Shipping & Handling:$0</small></p>
+            <p className='mb-0'><small>Shipping & Handling:
+                <span className="fw-bold">
+                    ${totalShipping.toFixed(2)}
+                </span>
+            </small></p>
             
             <p className='mb-0'>
                 <small>
-                    Total before tax:&emsp;&emsp;&nbsp;$0
+                    Total before tax:&emsp;&emsp;&nbsp;
+                        <span className="fw-bold">
+                            ${(totalPrice+totalShipping).toFixed(2)}
+                        </span>
                 </small>
             </p>
             
             <p><small>
-                Estimated tax:&emsp;&emsp;&emsp;$0
+                Estimated tax:&emsp;&emsp;&emsp;&nbsp;
+                    <span className="fw-bold">
+                        $0.00
+                    </span>
                 </small>
             </p>
             
-            <h6 className='fw-bold text-danger'>Order Total: &nbsp;${totalPrice.toFixed(2)}</h6>
+            <h6 className='fw-bold text-danger'>
+                Order Total: &nbsp;${(totalPrice+totalShipping).toFixed(2)}
+            </h6>
             
             <div className="d-flex justify-content-center">
                 <button className="bg-warning px-4 border-warning d-flex align-items-center rounded"><small>Review your order</small></button>
