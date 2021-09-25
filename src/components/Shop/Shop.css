@@ -1,3 +1,15 @@
+.search-box{
+    background-color: #222222;
+    padding: 1.4em;
+    display:flex;
+    justify-content: center;
+}
+
+.form-control{
+    padding: 0;
+    padding-left: 5px;
+}
+
 .product-container h3{
     background-color: lightgray;
 }

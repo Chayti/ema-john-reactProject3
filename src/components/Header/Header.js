@@ -13,12 +13,6 @@ const Header = () =>{
                 <a href="/orders">Order Review</a>
                 <a href="/inventory">Manage Inventory here</a>
             </nav>
-            
-            <div className="search-box">
-                <form className="w-75 mx-3">
-                    <input type="search" className="form-control" placeholder="Type here to search..." aria-label="Search"/>
-                </form>
-            </div>
 
         </div>
     );
