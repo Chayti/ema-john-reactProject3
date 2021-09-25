@@ -3,11 +3,9 @@ import './Cart.css';
 
 const Cart = (props) =>{
     const {cart} = props;
-    console.log(cart);
     
     let totalPrice = 0;
     let totalShipping = 0;
-    let grandTotal = 0;
     
     cart.map(cartProduct => totalPrice=totalPrice+cartProduct.price)
     cart.map(cartShipping => totalShipping=totalShipping+cartShipping.shipping)

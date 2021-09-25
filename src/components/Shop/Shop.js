@@ -25,8 +25,8 @@ const Shop = () =>{
     }
 
     return (
-        <div className="shop-container row">
-            <div className="product-container col-10 border-end">
+        <div className="shop-container row container-fluid">
+            <div className="product-container col-12 col-md-10 border-end">
                 <h3 className="text-center py-3">Products: {products.length}</h3>
                 {
                     products.map(product => <Product 
@@ -38,7 +38,7 @@ const Shop = () =>{
                     </Product>)
                 }
             </div>
-            <div className="card-container col-2">
+            <div className="card-container col-12 col-md-2">
                 <Cart cart={cart}></Cart>
             </div>
         </div>
