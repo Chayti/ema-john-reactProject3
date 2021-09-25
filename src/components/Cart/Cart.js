@@ -6,15 +6,21 @@ const Cart = (props) =>{
     
     let totalPrice = 0;
     let totalShipping = 0;
+    let totalQuantity = 0;
     
-    cart.map(cartProduct => totalPrice=totalPrice+cartProduct.price)
+    // const totalPrice = cart.reduce((prev,prod) => prev+prod.price,0);
+    cart.map(cartProduct => {
+        cartProduct.quantity = !cartProduct.quantity ? 1 : cartProduct.quantity;
+        totalPrice = totalPrice + cartProduct.price * cartProduct?.quantity;
+        totalQuantity = totalQuantity + cartProduct?.quantity;
+    })
     cart.map(cartShipping => totalShipping=totalShipping+cartShipping.shipping)
     
     return(
-        <div>
+        <div className="cart"> 
             <h5 className="fw-bold my-3 text-center">Order Summary</h5>
             
-            <p className="my-4 text-center">Items Ordered: {cart.length}</p>
+            <p className="my-4 text-center">Items Ordered: {totalQuantity}</p>
             
             <p className='mb-0'>
                 <small>
