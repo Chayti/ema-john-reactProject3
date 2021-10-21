@@ -1,93 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { addToDb, getStoredCart, removeFromDb } from "../../utilities/fakedb";
-import Cart from "../Cart/Cart";
-import Product from "../Product/Product";
-import "./Shop.css";
+import React, { useEffect, useState } from 'react';
+import Cart from '../Cart/Cart';
+import Product from '../Product/Product';
+import { addToDb } from '../../utilities/fakedb';
+import './Shop.css';
+import useCart from '../../hooks/useCart';
+import { Link } from 'react-router-dom';
 
-const Shop = () =>{
-
+const Shop = () => {
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useCart(products);
+    // products to be rendered on the UI
     const [displayProducts, setDisplayProducts] = useState([]);
 
-    useEffect(()=>{
-        fetch('./products.JSON')
-        .then(res => res.json())
-        .then(data => {
-            setProducts(data);
-            setDisplayProducts(data);
-        });
-    },[]);
+    useEffect(() => {
+        fetch('products.json')
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data);
+                setDisplayProducts(data);
+            });
+    }, []);
 
-    useEffect(()=>{
-        const savedCart = getStoredCart();
-        const storedCart = [];
-        if(products.length){
-            for (const key in savedCart){
-                const addedProduct = products.find(product => product.key === key);
-                if(addedProduct){
-                    const quantity = savedCart[key];
-                    addedProduct.quantity = quantity;
-                    storedCart.push(addedProduct);
-                }
-            }
-            setCart(storedCart);
+
+
+    const handleAddToCart = (product) => {
+        const exists = cart.find(pd => pd.key === product.key);
+        let newCart = [];
+        if (exists) {
+            const rest = cart.filter(pd => pd.key !== product.key);
+            exists.quantity = exists.quantity + 1;
+            newCart = [...rest, product];
         }
-    },[products]);
-
-    const handleAddToCart = product =>{
-        const newCart = [...cart, product];
+        else {
+            product.quantity = 1;
+            newCart = [...cart, product];
+        }
         setCart(newCart);
-        addToDb(product.key); //save to local storage
+        // save to local storage (for now)
+        addToDb(product.key);
+
     }
 
-    const handleRemoveFromCart = key =>{
-        const finalCart = cart.filter(product=>product.key!=key)
-        setCart(finalCart);
-        removeFromDb(key);
-    }
-
-    const handleSearch = event =>{
+    const handleSearch = event => {
         const searchText = event.target.value;
-        const matchedProducts = 
-        products.filter(product => product.name.toLowerCase().includes(searchText.toLowerCase()));
+
+        const matchedProducts = products.filter(product => product.name.toLowerCase().includes(searchText.toLowerCase()));
+
         setDisplayProducts(matchedProducts);
     }
 
     return (
         <>
-            
             <div className="search-box">
                 <form className="w-75 mx-3">
-                    <input 
-                        type="search" 
+                    <input
+                        type="search"
                         onChange={handleSearch}
-                        className="form-control" 
-                        placeholder="Type here to search..." 
-                        aria-label="Search"/>
+                        className="form-control"
+                        placeholder="Type here to search..."
+                        aria-label="Search" />
                 </form>
             </div>
-            
-            <div className="shop-container row container-fluid">
-                <div className="product-container col-12 col-md-10 border-end">
-                    <h3 className="text-center py-3">Products: {products.length}</h3>
+            <div className="shop-container">
+                <div className="product-container">
                     {
-                        displayProducts.map(product => <Product 
-                            key={product.key} 
+                        displayProducts.map(product => <Product
+                            key={product.key}
                             product={product}
-                            handleAddToCart = {handleAddToCart}
-                            handleRemoveFromCart ={handleRemoveFromCart}
+                            handleAddToCart={handleAddToCart}
                         >
                         </Product>)
                     }
                 </div>
-                <div className="card-container col-12 col-md-2">
-                    <Cart cart={cart}></Cart>
+                <div className="cart-container">
+                    <Cart cart={cart}>
+                        <Link to="/review">
+                            <button className="btn-regular">Review Your Order</button>
+                        </Link>
+                    </Cart>
                 </div>
             </div>
-
         </>
     );
-}
+};
 
 export default Shop;
