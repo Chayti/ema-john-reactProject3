@@ -38,49 +38,13 @@ async function run() {
             })
         })
 
-        // // GET Single Service API
-        // app.get('/services/:serviceId', async (req, res) => {
-        //     const id = req.params.serviceId
-        //     console.log(id)
-        //     const query = { _id: ObjectId(id) }
-        //     const service = await servicesCollection.findOne(query)
-        //     res.send(service)
-        // })
-
-        // // POST API
-        // app.post('/services', async (req, res) => {
-        //     const service = req.body
-        //     const result = await servicesCollection.insertOne(service)
-        //     console.log(result)
-        //     res.json(result)
-        // })
-
-        // // UPDATE API
-        // app.put('/services/:serviceId', async (req, res) => {
-        //     const id = req.params.serviceId
-        //     const updatedService = req.body
-        //     const filter = { _id: ObjectId(id) }
-        //     const options = { upsert: true }
-        //     const updateDoc = {
-        //         $set: {
-        //             name: updatedService.name,
-        //             description: updatedService.description,
-        //             price: updatedService.price,
-        //             img: updatedService.img
-        //         },
-        //     };
-        //     const result = await servicesCollection.updateOne(filter, updateDoc, options)
-        //     console.log('updating service', id)
-        //     res.send(result)
-        // })
-
-        // // DELETE API
-        // app.delete('/services/:serviceId', async (req, res) => {
-        //     const id = req.params.serviceId
-        //     const query = { _id: ObjectId(id) }
-        //     const result = await servicesCollection.deleteOne(query)
-        //     res.send(result)
-        // })
+        //use POST to get by keys
+        app.post('/products/byKeys', async (req, res) => {
+            const keys = req.body
+            const query = { key: { $in: keys } }
+            const products = await productCollection.find(query).toArray()
+            res.send(products)
+        })
 
     }
     finally {
