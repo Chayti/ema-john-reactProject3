@@ -1,0 +1,6 @@
+git init
+git remote add origin "existing_git_project_url"
+git checkout -b branch_name
+git add .
+git commit -m "initial commit"
+git push --set-upstream origin branch_name
