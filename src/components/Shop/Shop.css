@@ -19,3 +19,7 @@
     margin-right: 5px;
     margin-left: 50px;
 }
+.page-selected{
+    background-color: blueviolet;
+    color: wheat;
+}
